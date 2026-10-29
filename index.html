@@ -354,112 +354,78 @@
       transform: translateY(-1px);
     }
 
-    /* SECTION B: 1-TAP HANDSHAKE SPOTLIGHT ("Today's One Thing") */
-    .handshake-spotlight-card {
-      background: #FFFDF9;
-      border: 1px solid #FED7AA;
+    /* SECTION B: "ONE THING FOR TODAY" CARD */
+    .one-thing-card {
+      background: var(--surface);
+      border: 1px solid #DCE7FC;
       border-radius: var(--radius-card);
-      padding: 24px 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.06);
-      transition: all 0.2s ease;
-    }
-
-    .handshake-spotlight-card:hover {
-      box-shadow: 0 8px 28px rgba(245, 158, 11, 0.1);
-      transform: translateY(-1px);
-    }
-
-    .spotlight-top-row {
+      padding: 22px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
     }
 
-    .handshake-tag {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--amber);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .one-thing-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #BFDBFE;
+      transform: translateY(-1px);
     }
 
-    .zero-trust-pill {
-      font-size: 11px;
-      background: #FEF3C7;
-      color: #92400E;
-      padding: 2px 8px;
-      border-radius: var(--radius-pill);
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .spotlight-body {
+    .one-thing-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
+      width: 100%;
     }
 
-    .spotlight-text {
+    .one-thing-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .one-thing-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+    }
+
+    .one-thing-text {
       font-size: 17px;
       font-weight: 500;
       color: var(--text-main);
       line-height: 1.45;
     }
 
-    .spotlight-actions-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .one-thing-actions {
       flex-shrink: 0;
-    }
-
-    .btn-handshake-approve {
-      background: #D97706;
-      color: #fff;
-      padding: 9px 20px;
-      border-radius: var(--radius-pill);
-      font-size: 14px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.25);
-    }
-
-    .btn-handshake-approve:hover {
-      background: #B45309;
-      transform: translateY(-1px);
     }
 
     .btn-voice-listen {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: var(--radius-pill);
       background: var(--surface);
       color: var(--primary);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       border: 1px solid var(--primary-soft);
+      cursor: pointer;
     }
 
     .btn-voice-listen:hover {
       background: #DBEAFE;
     }
 
-    /* SECTION C: 60s OFFER RADAR */
+    /* 60s OFFER RADAR */
     .radar-banner {
       background: var(--surface);
       border: 1px solid #DCE7FC;
@@ -1463,8 +1429,9 @@
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .greeting-section { flex-direction: column; align-items: stretch; }
-      .spotlight-body { flex-direction: column; align-items: stretch; gap: 14px; }
-      .spotlight-actions-group { flex-direction: column; align-items: stretch; }
+      .one-thing-content { flex-direction: column; align-items: stretch; gap: 14px; }
+      .one-thing-actions { width: 100%; }
+      .one-thing-actions .btn-primary { width: 100%; justify-content: center; }
       .summary-chips-row { grid-template-columns: repeat(2, 1fr); }
       .agents-grid { grid-template-columns: 1fr; }
       .issue-row { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -1553,13 +1520,9 @@
     <section class="greeting-section" aria-label="Welcome">
       <div>
         <h1 class="greeting-title" id="dynamic-greeting">Good morning, Enaye.</h1>
-        <p class="greeting-sub" id="dynamic-sub">You have 1 handshake waiting, and 4 teammates operating in Zedu.</p>
+        <p class="greeting-sub" id="dynamic-sub">You have 1 issue waiting, and you're past this week's goal.</p>
       </div>
       <div class="greeting-actions">
-        <button class="btn-action-pill" onclick="simulateIncomingOffer()" title="Test 60s Fast Validation Offer">
-          <span style="color: var(--amber);">⚡</span>
-          <span>Simulate Offer</span>
-        </button>
         <button class="btn-action-pill" onclick="openNewIssueModal()">
           <span>+</span>
           <span>New issue</span>
@@ -1567,60 +1530,22 @@
       </div>
     </section>
 
-    <!-- SECTION B: 1-TAP HANDSHAKE SPOTLIGHT ("Today's One Thing") -->
-    <section class="handshake-spotlight-card" id="handshake-section">
-      <div class="spotlight-top-row">
-        <div class="handshake-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6 5.7 21l2.3-7.2-6-4.4h7.6z"/></svg>
-          Today's One Handshake · Zero-Trust Protocol
-        </div>
-        <span class="zero-trust-pill">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-          Zero Write Access Without Human Approval
-        </span>
-      </div>
-
-      <div class="spotlight-body" id="spotlight-body">
-        <div>
-          <p class="spotlight-text" id="spotlight-text">
-            <strong>Gojo</strong> finished verified fix for <strong>#93</strong> (Stale composer channel) and is waiting for your 1-tap handshake approval.
+    <!-- SECTION B: "ONE THING FOR TODAY" CARD -->
+    <section class="one-thing-card" id="handshake-section">
+      <div class="one-thing-content" id="spotlight-body">
+        <div class="one-thing-info">
+          <span class="one-thing-label">Today's one thing</span>
+          <p class="one-thing-text" id="spotlight-text">
+            Gojo finished a fix for <strong>#93</strong> and would like your review.
           </p>
-          <details class="trust-details" style="margin-top: 6px;">
-            <summary class="trust-summary">Inspect why Gojo did this</summary>
-            <p style="margin-top: 4px; color: var(--text-muted); font-size: 13px;">
-              The ToastViewport overlay was intercepting pointer events across the entire bounding box. Gojo constrained pointer events to restore instant typing into the composer.
-            </p>
-          </details>
         </div>
-
-        <div class="spotlight-actions-group">
-          <button class="btn-voice-listen" onclick="speakHandshakeBriefing()">
-            <span>🔊</span>
-            <span id="voice-briefing-btn-lbl">Voice briefing</span>
-          </button>
-          <button class="btn-action-pill" onclick="openReviewModal()">Review diff</button>
-          <button class="btn-handshake-approve" onclick="approveGojoHandoff()">
-            <span>🤝</span>
-            <span>1-Tap Approve (+25 pts)</span>
-          </button>
+        <div class="one-thing-actions">
+          <button class="btn-primary" onclick="openReviewModal()">Review</button>
         </div>
       </div>
     </section>
 
-    <!-- SECTION C: 60s OFFER RADAR -->
-    <section class="radar-banner" id="radar-section">
-      <div class="radar-left">
-        <span class="radar-pulse-dot"></span>
-        <span id="radar-status-text"><strong>60s Offer Radar:</strong> Scanning feeds for incoming fast PR review opportunities.</span>
-      </div>
-      <div id="radar-action-area">
-        <button class="btn-action-pill" style="font-size: 12px; padding: 5px 12px;" onclick="simulateIncomingOffer()">
-          Simulate 60s Offer
-        </button>
-      </div>
-    </section>
-
-    <!-- SECTION D: CALM SUMMARY ROW -->
+    <!-- SECTION C: CALM SUMMARY ROW -->
     <section class="summary-section">
       <div class="summary-controls">
         <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">Overview</span>
@@ -1861,6 +1786,19 @@
       </div>
     </section>
 
+    <!-- 60s OFFER RADAR -->
+    <section class="radar-banner" id="radar-section">
+      <div class="radar-left">
+        <span class="radar-pulse-dot"></span>
+        <span id="radar-status-text"><strong>60s Offer Radar:</strong> Scanning feeds for incoming fast PR review opportunities.</span>
+      </div>
+      <div id="radar-action-area">
+        <button class="btn-action-pill" style="font-size: 12px; padding: 5px 12px;" onclick="simulateIncomingOffer()">
+          Simulate 60s Offer
+        </button>
+      </div>
+    </section>
+
     <!-- SECTION H: VERIFIED HANDSHAKE LEDGER -->
     <section class="ledger-card" id="ledger-section">
       <div class="section-header" style="margin-bottom: 0;">
@@ -2010,9 +1948,15 @@
       </div>
 
       <div>
-        <p style="font-size: 13px; color: var(--text-main); margin-bottom: 8px;">
-          <strong>Summary:</strong> Restrained pointer events so that notifications on the screen do not capture clicks intended for the message composer input.
-        </p>
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
+          <p style="font-size: 13px; color: var(--text-main); margin: 0; line-height: 1.4;">
+            <strong>Summary:</strong> Restrained pointer events so that notifications on the screen do not capture clicks intended for the message composer input.
+          </p>
+          <button type="button" class="btn-voice-listen" onclick="speakHandshakeBriefing()" title="Listen to spoken summary">
+            <span>🔊</span>
+            <span id="voice-briefing-btn-lbl">Voice briefing</span>
+          </button>
+        </div>
         <div class="diff-box">
 <span class="diff-del">- &lt;ToastViewport className="fixed top-0 right-0 z-50 pointer-events-auto" /&gt;</span>
 <span class="diff-add">+ &lt;ToastViewport className="fixed top-0 right-0 z-50 pointer-events-none"&gt;</span>
@@ -2278,6 +2222,10 @@
       } else {
         titleElem.textContent = 'Good evening, Enaye.';
       }
+      const subElem = document.getElementById('dynamic-sub');
+      if (subElem) {
+        subElem.textContent = "You have 1 issue waiting, and you're past this week's goal.";
+      }
     }
 
     // 2. Render Issues List
@@ -2451,16 +2399,20 @@
       VoiceEngine.speak("Handshake approved! Issue 93 is safely merged into production. +25 points credited.", "Gojo");
 
       setTimeout(() => {
-        document.getElementById('spotlight-body').innerHTML = `
-          <div>
-            <div class="handshake-tag" style="color: var(--success);">
-              ✓ All Handshakes Verified
+        const spotlight = document.getElementById('spotlight-body');
+        if (spotlight) {
+          spotlight.innerHTML = `
+            <div class="one-thing-info">
+              <span class="one-thing-label" style="color: var(--success);">All caught up</span>
+              <p class="one-thing-text">You're all caught up. Take a breath.</p>
             </div>
-            <p class="spotlight-text">You're all caught up. No pending approvals. Take a breath.</p>
-          </div>
-          <span style="font-size: 24px;">☕</span>
-        `;
-        document.getElementById('nav-pending-badge').textContent = '0';
+            <span style="font-size: 26px;">☕</span>
+          `;
+        }
+        const badge = document.getElementById('nav-pending-badge');
+        if (badge) badge.textContent = '0';
+        const sub = document.getElementById('dynamic-sub');
+        if (sub) sub.textContent = "All caught up for today. Enjoy the quiet.";
       }, 700);
     }
 
