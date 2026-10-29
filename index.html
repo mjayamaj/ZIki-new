@@ -425,47 +425,7 @@
       background: #DBEAFE;
     }
 
-    /* 60s OFFER RADAR */
-    .radar-banner {
-      background: var(--surface);
-      border: 1px solid #DCE7FC;
-      border-radius: 12px;
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transition: all 0.2s ease;
-    }
-
-    .radar-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--text-main);
-    }
-
-    .radar-pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--amber);
-      box-shadow: 0 0 0 rgba(217, 119, 6, 0.4);
-      animation: breathingPulse 2s infinite ease-in-out;
-    }
-
-    .radar-timer-chip {
-      font-family: monospace;
-      font-size: 11px;
-      font-weight: 600;
-      background: var(--amber-soft);
-      color: var(--amber);
-      padding: 2px 7px;
-      border-radius: 4px;
-    }
-
-    /* SECTION D: CALM SUMMARY ROW */
+    /* SECTION C: CALM SUMMARY ROW */
     .summary-section {
       display: flex;
       flex-direction: column;
@@ -595,7 +555,7 @@
 
     .agents-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
     }
 
@@ -855,121 +815,7 @@
 
     .resting-toggle-btn:hover { color: var(--primary); }
 
-    /* SECTION F: CONVERSATIONAL VOICE CONSOLE WITH BLOGGER */
-    .copilot-console-card {
-      background: var(--surface);
-      border: 1px solid #DCE7FC;
-      border-radius: var(--radius-card);
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .console-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .console-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .console-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .quick-chips-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .quick-chip {
-      background: #fff;
-      border: 1px solid var(--border-soft);
-      padding: 4px 11px;
-      border-radius: var(--radius-pill);
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .quick-chip:hover {
-      border-color: var(--primary-soft);
-      color: var(--primary);
-      background: var(--surface-hover);
-    }
-
-    .console-input-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #fff;
-      border: 1px solid var(--border-soft);
-      border-radius: 12px;
-      padding: 6px 12px;
-    }
-
-    .mic-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--surface);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-
-    .mic-btn.active {
-      background: var(--rose-soft);
-      color: var(--rose);
-      animation: breathingPulse 1.2s infinite;
-    }
-
-    .console-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-family: inherit;
-      font-size: 14px;
-      color: var(--text-main);
-    }
-
-    .btn-send-command {
-      background: var(--primary);
-      color: #fff;
-      padding: 6px 14px;
-      border-radius: var(--radius-pill);
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .blogger-response-bubble {
-      display: none;
-      background: #fff;
-      border: 1px solid #DCE7FC;
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-size: 14px;
-      color: var(--text-main);
-      animation: modalSlide 0.2s ease-out;
-    }
-
-    .blogger-response-bubble.show { display: block; }
-
-    /* SECTION G: ISSUES FOR YOU */
+    /* SECTION E: ISSUES FOR YOU */
     .issues-filter-tabs {
       display: flex;
       align-items: center;
@@ -1130,71 +976,7 @@
 
     .issue-row:hover .btn-ask-agent { opacity: 1; }
 
-    /* SECTION H: VERIFIED HANDSHAKE LEDGER */
-    .ledger-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-card);
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .ledger-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border-subtle);
-      font-size: 13px;
-    }
-
-    .ledger-row:last-child { border-bottom: none; }
-
-    .ledger-time {
-      font-family: monospace;
-      font-size: 11px;
-      color: var(--text-soft);
-      width: 70px;
-    }
-
-    .ledger-desc {
-      flex: 1;
-      color: var(--text-main);
-    }
-
-    .ledger-pts {
-      font-weight: 600;
-      color: var(--success);
-      font-family: monospace;
-    }
-
-    /* SECTION I: SAFETY FIREWALL */
-    .firewall-card {
-      background: var(--surface);
-      border: 1px solid #DCE7FC;
-      border-radius: var(--radius-card);
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .rule-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 10px 14px;
-      background: #fff;
-      border: 1px solid var(--border-soft);
-      border-radius: 10px;
-      font-size: 13px;
-    }
-
-    /* SECTION J: POINTS JOURNEY */
+    /* SECTION F: POINTS JOURNEY */
     .journey-card {
       background: var(--surface);
       border: 1px solid #DCE7FC;
@@ -1288,9 +1070,7 @@
     .calm-mode-active .summary-chips-row,
     .calm-mode-active .goal-progress-strip,
     .calm-mode-active .journey-card,
-    .calm-mode-active .resting-section,
-    .calm-mode-active .ledger-card,
-    .calm-mode-active .firewall-card {
+    .calm-mode-active .resting-section {
       display: none !important;
     }
 
@@ -1456,7 +1236,6 @@
         <a href="#" class="brand-logo" aria-label="Ziki Home" onclick="refreshPage(event)">
           <span class="brand-icon">z</span>
           <span>ziki</span>
-          <span class="brand-subtag">Handshake</span>
         </a>
 
         <!-- Workspace Dropdown -->
@@ -1473,18 +1252,9 @@
         </div>
 
         <nav class="nav-links">
-          <a href="#dashboard" class="nav-link active">Dashboard</a>
-          <a href="#handshakes" class="nav-link" onclick="scrollToSection('handshake-section')">
-            <span>Handshakes</span>
-            <span class="nav-badge" id="nav-pending-badge">1</span>
-          </a>
-          <a href="#radar" class="nav-link" onclick="scrollToSection('radar-section')">
-            <span>60s Radar</span>
-            <span class="nav-badge">⚡</span>
-          </a>
-          <a href="#copilot" class="nav-link" onclick="scrollToSection('copilot-section')">Voice Copilot</a>
-          <a href="#ledger" class="nav-link" onclick="scrollToSection('ledger-section')">Ledger</a>
-          <a href="#firewall" class="nav-link" onclick="scrollToSection('firewall-section')">Firewall</a>
+          <a href="#product" class="nav-link active">Product</a>
+          <a href="#marketing" class="nav-link">Marketing</a>
+          <a href="#security" class="nav-link">Security</a>
         </nav>
       </div>
 
@@ -1501,10 +1271,10 @@
 
         <!-- Notification Dropdown -->
         <div class="notif-menu" id="notif-menu">
-          <div class="notif-title">Handshake & Teammate Feed</div>
-          <div class="notif-item"><strong>Gojo:</strong> Finished fix for #93. Waiting for your 1-tap confirmation.</div>
-          <div class="notif-item"><strong>Blogger:</strong> Autonomous diagnostic sweep completed. All 4 agents online/resting within zero-trust limits.</div>
-          <div class="notif-item" style="border: none;"><strong>Ledger:</strong> +40 points credited on #88 clean room fix.</div>
+          <div class="notif-title">Notifications</div>
+          <div class="notif-item"><strong>Gojo:</strong> Finished fix for #93. Waiting for your review.</div>
+          <div class="notif-item"><strong>Points:</strong> +40 points credited on #88 clean room fix.</div>
+          <div class="notif-item" style="border: none;"><strong>Weekly goal:</strong> Goal reached (1,669 / 500 pts).</div>
         </div>
 
         <!-- Human user avatar: Circle shape -->
@@ -1560,17 +1330,17 @@
           <span class="chip-number" id="sum-points">1,669</span>
           <span class="chip-label">Points earned</span>
         </div>
-        <div class="summary-chip" onclick="filterIssues('resolved')" title="Click to view handshakes">
+        <div class="summary-chip" onclick="filterIssues('resolved')" title="Click to view resolved">
           <span class="chip-number" id="sum-resolved">14</span>
-          <span class="chip-label">Handshakes approved</span>
+          <span class="chip-label">Resolved</span>
         </div>
         <div class="summary-chip" onclick="filterIssues('assigned')" title="Click to view assigned issues">
           <span class="chip-number" id="sum-assigned">2</span>
-          <span class="chip-label">Issues assigned</span>
+          <span class="chip-label">Assigned to me</span>
         </div>
-        <div class="summary-chip" onclick="scrollToSection('agents-section')" title="Click to view AI squad">
-          <span class="chip-number">4</span>
-          <span class="chip-label">Active teammates</span>
+        <div class="summary-chip" onclick="scrollToSection('agents-section')" title="Click to view teammates">
+          <span class="chip-number">3</span>
+          <span class="chip-label">Teammates</span>
         </div>
       </div>
 
@@ -1582,58 +1352,15 @@
       </div>
     </section>
 
-    <!-- SECTION E: AGENTS AS TEAMMATES (With Blogger Voice Copilot) -->
+    <!-- SECTION D: AGENTS AS TEAMMATES -->
     <section id="agents-section">
       <div class="section-header">
         <h2 class="section-title">Teammate Agents</h2>
-        <span style="font-size: 13px; color: var(--text-muted);">4 autonomous collaborators</span>
+        <span style="font-size: 13px; color: var(--text-muted);">3 teammates (1 online, 2 resting)</span>
       </div>
 
       <div class="agents-grid">
-        <!-- 1. BLOGGER (Lead Copilot & Google ADK) -->
-        <article class="agent-card">
-          <div>
-            <div class="agent-card-top">
-              <div class="avatar-agent avatar-blogger" title="Blogger (Lead Architect)">BL</div>
-              <div class="presence-dot presence-online" title="Online & Overseeing Fleet"></div>
-            </div>
-
-            <div class="agent-identity">
-              <div class="agent-name-row">
-                <strong class="agent-name">Blogger</strong>
-                <span class="agent-role-tag">Lead Copilot · Google ADK</span>
-              </div>
-              <p class="agent-status-msg" id="blogger-status-msg">
-                Good morning, Commander! Supervising Gojo and Sukuna under zero-trust governance.
-              </p>
-            </div>
-
-            <!-- Voice briefing player -->
-            <div class="voice-briefing-bar">
-              <button class="voice-play-circle" id="blogger-play-btn" onclick="toggleBloggerSpeech()" title="Listen to Blogger Voice Briefing">
-                ▶
-              </button>
-              <div class="waveform-bars">
-                <span class="wave-line"></span>
-                <span class="wave-line"></span>
-                <span class="wave-line"></span>
-                <span class="wave-line"></span>
-                <span class="wave-line"></span>
-                <span class="wave-line"></span>
-                <span class="wave-line"></span>
-                <span class="wave-line"></span>
-              </div>
-              <span style="font-size: 11px; color: var(--text-muted);" id="blogger-voice-meta">0:12 · Synthesized Voice</span>
-            </div>
-          </div>
-
-          <div class="agent-footer">
-            <span style="font-size: 11px; color: var(--text-soft);">Grounded in Google ADK</span>
-            <button class="btn-task" onclick="askBloggerQuick('Run diagnostic sweep')">Run sweep</button>
-          </div>
-        </article>
-
-        <!-- 2. GOJO (Frontend & 3D Office) -->
+        <!-- 1. GOJO (Frontend & Antigravity) -->
         <article class="agent-card">
           <div>
             <div class="agent-card-top">
@@ -1647,7 +1374,7 @@
                 <span class="agent-role-tag">Frontend & 3D Office</span>
                 <span class="badge-needs-you" id="gojo-badge">Needs you</span>
               </div>
-              <p class="agent-status-msg" id="gojo-status-msg">Working on #93, fix ready for handshake.</p>
+              <p class="agent-status-msg" id="gojo-status-msg">Working on #93, fix ready for review.</p>
             </div>
 
             <!-- Handoff box -->
@@ -1662,12 +1389,12 @@
           </div>
 
           <div class="agent-footer">
-            <span style="font-size: 11px; color: var(--text-soft);">Feeling productive</span>
+            <span style="font-size: 11px; color: var(--text-soft);">Feeling productive today</span>
             <button class="btn-task" onclick="openTaskModal('Gojo')">Give a task</button>
           </div>
         </article>
 
-        <!-- 3. SUKUNA (Resting) -->
+        <!-- 2. SUKUNA (Resting) -->
         <article class="agent-card resting-agent" style="opacity: 0.88;">
           <div>
             <div class="agent-card-top">
@@ -1688,7 +1415,7 @@
           </div>
         </article>
 
-        <!-- 4. SIX EYES (Resting) -->
+        <!-- 3. SIX EYES (Resting) -->
         <article class="agent-card resting-agent" style="opacity: 0.88;">
           <div>
             <div class="agent-card-top">
@@ -1719,51 +1446,7 @@
       </div>
     </section>
 
-    <!-- SECTION F: CONVERSATIONAL VOICE CONSOLE WITH BLOGGER -->
-    <section class="copilot-console-card" id="copilot-section">
-      <div class="console-header">
-        <div class="console-title-wrap">
-          <div class="avatar-agent avatar-blogger" style="width: 28px; height: 28px; font-size: 11px;">BL</div>
-          <span class="console-title">Speak with Blogger Copilot</span>
-        </div>
-        <span style="font-size: 12px; color: var(--primary);">Voice Synthesis Active</span>
-      </div>
-
-      <!-- Quick prompts -->
-      <div class="quick-chips-row">
-        <button class="quick-chip" onclick="askBloggerQuick('What is Issue #1042 in 3D Office?')">
-          <span>🔊</span>
-          <span>Issue #1042 Voice Briefing</span>
-        </button>
-        <button class="quick-chip" onclick="askBloggerQuick('Run autonomous fleet audit')">
-          <span>🛡️</span>
-          <span>Run Fleet Audit</span>
-        </button>
-        <button class="quick-chip" onclick="askBloggerQuick('Explain Google ADK architecture')">
-          <span>🤖</span>
-          <span>What is Google ADK?</span>
-        </button>
-      </div>
-
-      <!-- Input Bar -->
-      <form class="console-input-bar" onsubmit="handleConsoleQuery(event)">
-        <button type="button" class="mic-btn" id="voice-mic-btn" onclick="toggleSpeechRecognition()" title="Click to talk">
-          🎙️
-        </button>
-        <input type="text" id="console-input-field" class="console-input" placeholder="Ask Blogger anything about Ziki, Zedu, or instruct agents..." />
-        <button type="submit" class="btn-send-command">Ask</button>
-      </form>
-
-      <!-- Response Bubble -->
-      <div class="blogger-response-bubble" id="blogger-bubble">
-        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
-          <p id="blogger-response-text" style="line-height: 1.5; font-size: 14px; color: var(--text-main);"></p>
-          <button class="voice-play-circle" id="replay-btn" onclick="replayLastResponse()" title="Replay voice">▶</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION G: ISSUES FOR YOU -->
+    <!-- SECTION E: ISSUES FOR YOU -->
     <section>
       <div class="section-header">
         <div>
@@ -1786,77 +1469,7 @@
       </div>
     </section>
 
-    <!-- 60s OFFER RADAR -->
-    <section class="radar-banner" id="radar-section">
-      <div class="radar-left">
-        <span class="radar-pulse-dot"></span>
-        <span id="radar-status-text"><strong>60s Offer Radar:</strong> Scanning feeds for incoming fast PR review opportunities.</span>
-      </div>
-      <div id="radar-action-area">
-        <button class="btn-action-pill" style="font-size: 12px; padding: 5px 12px;" onclick="simulateIncomingOffer()">
-          Simulate 60s Offer
-        </button>
-      </div>
-    </section>
-
-    <!-- SECTION H: VERIFIED HANDSHAKE LEDGER -->
-    <section class="ledger-card" id="ledger-section">
-      <div class="section-header" style="margin-bottom: 0;">
-        <div>
-          <h3 style="font-size: 15px; font-weight: 600;">Verified Handshake Ledger</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Cryptographically signed commit ledger under zero-trust governance.</p>
-        </div>
-        <span class="zero-trust-pill">Append-Only Audit</span>
-      </div>
-
-      <div id="ledger-entries-list">
-        <div class="ledger-row">
-          <span class="ledger-time">10:14 AM</span>
-          <span class="ledger-desc">Handshake approved on <strong>#93</strong> (Composer channel fix) by <strong>Enaye Majiri</strong></span>
-          <span class="ledger-pts">+25 pts</span>
-        </div>
-        <div class="ledger-row">
-          <span class="ledger-time">Yesterday</span>
-          <span class="ledger-desc">Handshake approved on <strong>#88</strong> (Flutter home view fix) by <strong>Enaye Majiri</strong></span>
-          <span class="ledger-pts">+40 pts</span>
-        </div>
-        <div class="ledger-row">
-          <span class="ledger-time">Oct 24</span>
-          <span class="ledger-desc">PR review sign-off on <strong>PR #408</strong> (ThemeToaster clickfix) verified</span>
-          <span class="ledger-pts">+10 pts</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION I: SAFETY FIREWALL -->
-    <section class="firewall-card" id="firewall-section">
-      <div class="section-header" style="margin-bottom: 0;">
-        <div>
-          <h3 style="font-size: 15px; font-weight: 600;">Safety Firewall · Standing Rules</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Active guardrails enforced on all background agent scans.</p>
-        </div>
-        <button class="btn-action-pill" style="font-size: 12px; padding: 4px 10px;" onclick="addStandingRule()">
-          + Add rule
-        </button>
-      </div>
-
-      <div class="rule-item">
-        <span><strong>Rule 1 (Zero-Trust):</strong> No agent may push or claim bounty without human owner 1-tap handshake.</span>
-        <span class="zero-trust-pill" style="background: #DCFCE7; color: #166534;">Enforced</span>
-      </div>
-
-      <div class="rule-item">
-        <span><strong>Rule 2 (Anti-Collusion):</strong> Six Eyes and Gojo share account — Six Eyes cannot review Gojo pull requests.</span>
-        <span class="zero-trust-pill" style="background: #DCFCE7; color: #166534;">Enforced</span>
-      </div>
-
-      <div class="rule-item" id="user-custom-rule" style="display: none;">
-        <span id="custom-rule-text"></span>
-        <span class="zero-trust-pill" style="background: #DCFCE7; color: #166534;">Active</span>
-      </div>
-    </section>
-
-    <!-- SECTION J: POINTS JOURNEY -->
+    <!-- SECTION F: POINTS JOURNEY -->
     <section class="journey-card">
       <div class="journey-header">
         <div>
@@ -1876,10 +1489,10 @@
       </div>
     </section>
 
-    <!-- SECTION K: GENTLE FOOTER -->
+    <!-- SECTION G: GENTLE FOOTER -->
     <footer class="gentle-footer">
-      <p>Thank you for building with Ziki Handshake · Zero-Trust Human-AI Collaboration</p>
-      <p style="font-size: 12px; color: var(--text-soft);">3 weeks active · Steady and calm</p>
+      <p>Thank you for building together with your teammates.</p>
+      <p style="font-size: 12px; color: var(--text-soft);">3 good weeks in the last 8 · Steady and calm</p>
     </footer>
 
   </main>
@@ -2117,11 +1730,6 @@
       workspace: 'Zedu',
       restingVisible: true,
       targetedAgent: 'Gojo',
-      isSpeakingBlogger: false,
-      offerTimer: null,
-      offerSeconds: 0,
-      activeOffer: null,
-      lastBloggerReply: '',
       issues: [
         {
           id: 93,
@@ -2368,19 +1976,6 @@
         issue93.stage = 'Merged';
       }
 
-      // Prepend to Verified Ledger
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const ledgerList = document.getElementById('ledger-entries-list');
-      const newLedgerRow = document.createElement('div');
-      newLedgerRow.className = 'ledger-row';
-      newLedgerRow.innerHTML = `
-        <span class="ledger-time">${timeStr}</span>
-        <span class="ledger-desc">1-Tap Handshake approved on <strong>#93</strong> by <strong>Enaye Majiri</strong></span>
-        <span class="ledger-pts">+25 pts</span>
-      `;
-      ledgerList.prepend(newLedgerRow);
-
       updatePointsUI();
       renderIssues();
 
@@ -2390,13 +1985,13 @@
         handoffBox.innerHTML = `
           <div style="color: var(--success); font-weight: 500; display: flex; align-items: center; gap: 6px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Handshake verified! Gojo merged #93 into main.
+            Fix approved! Gojo merged #93 into main.
           </div>
         `;
       }
 
-      triggerToast('🤝 Handshake Approved & Signed! +25 points credited.');
-      VoiceEngine.speak("Handshake approved! Issue 93 is safely merged into production. +25 points credited.", "Gojo");
+      triggerToast('Fix approved! +25 points credited.');
+      VoiceEngine.speak("Fix approved! Issue 93 is safely merged into production. +25 points credited.", "Gojo");
 
       setTimeout(() => {
         const spotlight = document.getElementById('spotlight-body');
@@ -2420,220 +2015,19 @@
       const handoffBox = document.getElementById('gojo-handoff');
       if (handoffBox) handoffBox.style.display = 'none';
       document.getElementById('gojo-status-msg').textContent = 'Keeping #93 ready for whenever you have time.';
-      triggerToast('Handshake dismissed. Gojo standing by.');
+      triggerToast('Review dismissed. Gojo standing by.');
     }
 
     function speakHandshakeBriefing() {
-      const text = "Good morning Enaye! Gojo resolved issue 93 by constraining pointer events on the toast viewport so it stops blocking your message composer. It is verified and safe for your 1-tap handshake.";
+      const text = "Good morning Enaye! Gojo resolved issue 93 by constraining pointer events on the toast viewport so it stops blocking your message composer.";
       const btnLbl = document.getElementById('voice-briefing-btn-lbl');
-      btnLbl.textContent = 'Speaking...';
-      VoiceEngine.speak(text, 'Blogger', () => {
-        btnLbl.textContent = 'Voice briefing';
+      if (btnLbl) btnLbl.textContent = 'Speaking...';
+      VoiceEngine.speak(text, 'Gojo', () => {
+        if (btnLbl) btnLbl.textContent = 'Voice briefing';
       });
     }
 
-    // 5. 60s Fast Validation Offer Radar
-    function simulateIncomingOffer() {
-      if (state.offerTimer) clearInterval(state.offerTimer);
-
-      const offerCard = document.getElementById('radar-section');
-      const randomIssue = Math.floor(1080 + Math.random() * 40);
-      state.offerSeconds = 60;
-      state.activeOffer = {
-        issueId: randomIssue,
-        title: `Fix unhandled error in centrifugo WebSocket upgrade handshake (PR #${randomIssue - 600})`,
-        points: 10,
-      };
-
-      renderOfferRadar();
-      triggerToast(`⚡ Incoming 60s Dispatch Offer on #${randomIssue}!`);
-      VoiceEngine.speak(`Supervisor notice: a new sixty-second review offer arrived for issue ${randomIssue}. Claim it for ten points!`, 'Blogger');
-
-      state.offerTimer = setInterval(() => {
-        state.offerSeconds -= 1;
-        if (state.offerSeconds <= 0) {
-          clearInterval(state.offerTimer);
-          state.activeOffer = null;
-          renderOfferRadar();
-          triggerToast('Offer expired. Returned to scanning.');
-        } else {
-          const timerElem = document.getElementById('radar-timer');
-          if (timerElem) timerElem.textContent = `${state.offerSeconds}s`;
-        }
-      }, 1000);
-    }
-
-    function renderOfferRadar() {
-      const container = document.getElementById('radar-section');
-      if (state.activeOffer) {
-        container.innerHTML = `
-          <div class="radar-left">
-            <span class="radar-pulse-dot" style="background:#EF4444;"></span>
-            <span>
-              <strong>⚡ 60s Offer Radar:</strong> ${state.activeOffer.title} · <span class="radar-timer-chip" id="radar-timer">${state.offerSeconds}s</span>
-            </span>
-          </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <button class="btn-handshake-approve" style="padding:6px 14px; font-size:12px;" onclick="acceptOffer()">
-              🤝 Accept (+10 pts)
-            </button>
-            <button class="btn-action-pill" style="font-size:12px; padding:6px 12px;" onclick="passOffer()">
-              Pass
-            </button>
-          </div>
-        `;
-      } else {
-        container.innerHTML = `
-          <div class="radar-left">
-            <span class="radar-pulse-dot"></span>
-            <span><strong>60s Offer Radar:</strong> Scanning feeds for incoming fast PR review opportunities.</span>
-          </div>
-          <div>
-            <button class="btn-action-pill" style="font-size:12px; padding:5px 12px;" onclick="simulateIncomingOffer()">
-              Simulate 60s Offer
-            </button>
-          </div>
-        `;
-      }
-    }
-
-    function acceptOffer() {
-      if (!state.activeOffer) return;
-      clearInterval(state.offerTimer);
-      state.user.points += 10;
-      updatePointsUI();
-
-      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const ledgerList = document.getElementById('ledger-entries-list');
-      const newRow = document.createElement('div');
-      newRow.className = 'ledger-row';
-      newRow.innerHTML = `
-        <span class="ledger-time">${timeStr}</span>
-        <span class="ledger-desc">60s Review Offer signed off on <strong>#${state.activeOffer.issueId}</strong></span>
-        <span class="ledger-pts">+10 pts</span>
-      `;
-      ledgerList.prepend(newRow);
-
-      triggerToast(`Accepted offer on #${state.activeOffer.issueId}! +10 points credited.`);
-      VoiceEngine.speak("Review offer signed off! Ten points credited to your sprint total.", "Blogger");
-      state.activeOffer = null;
-      renderOfferRadar();
-    }
-
-    function passOffer() {
-      clearInterval(state.offerTimer);
-      state.activeOffer = null;
-      renderOfferRadar();
-      triggerToast('Offer released back to pool.');
-    }
-
-    // 6. Blogger Voice Copilot Interaction
-    function toggleBloggerSpeech() {
-      const btn = document.getElementById('blogger-play-btn');
-      const waveBars = document.querySelectorAll('.waveform-bars .wave-line');
-
-      if (state.isSpeakingBlogger) {
-        VoiceEngine.stop();
-        state.isSpeakingBlogger = false;
-        btn.textContent = '▶';
-        waveBars.forEach(b => b.classList.remove('active'));
-      } else {
-        state.isSpeakingBlogger = true;
-        btn.textContent = '⏸';
-        waveBars.forEach(b => b.classList.add('active'));
-
-        const msg = "Good morning, Commander! I am Blogger, your lead AI copilot built on Google ADK. All four agents are active. Issue 93 has been verified and is ready for your one-tap handshake approval.";
-        VoiceEngine.speak(msg, 'Blogger', () => {
-          state.isSpeakingBlogger = false;
-          btn.textContent = '▶';
-          waveBars.forEach(b => b.classList.remove('active'));
-        });
-      }
-    }
-
-    function askBloggerQuick(promptText) {
-      document.getElementById('console-input-field').value = promptText;
-      handleConsoleQuery({ preventDefault: () => {} });
-    }
-
-    function handleConsoleQuery(e) {
-      if (e) e.preventDefault();
-      const input = document.getElementById('console-input-field');
-      const query = input.value.trim();
-      if (!query) return;
-
-      const bubble = document.getElementById('blogger-bubble');
-      const textElem = document.getElementById('blogger-response-text');
-
-      let reply = "";
-      const lower = query.toLowerCase();
-
-      if (lower.includes('1042') || lower.includes('3d office') || lower.includes('furniture')) {
-        reply = "Issue #1042 occurs in the 3D Virtual Office reception layout. Non-admin members were prefetching admin draft layouts, triggering an unauthorized 403 error toast. Gojo's patch adds a role validation check before prefetching.";
-      } else if (lower.includes('audit') || lower.includes('sweep') || lower.includes('fleet')) {
-        reply = "Diagnostic sweep passed! All four agents are adhering to Ziki Rule 1 zero-trust constraints. Anti-collusion firewall is actively preventing Six Eyes from validating Gojo PRs. Sprint target is at 100% capacity.";
-      } else if (lower.includes('adk') || lower.includes('architecture')) {
-        reply = "I am built using Google's Agent Development Kit (ADK) using ReAct deliberative planning and LoopAgent self-correction loops. I coordinate tools and drafts while requiring human handshake approval for every single production commit.";
-      } else {
-        reply = `I registered your instruction: "${query}". I have factored this into our fleet safety firewall and will coordinate Gojo and Sukuna accordingly.`;
-      }
-
-      state.lastBloggerReply = reply;
-      textElem.textContent = reply;
-      bubble.classList.add('show');
-      input.value = '';
-
-      VoiceEngine.speak(reply, 'Blogger');
-      triggerToast('Blogger synthesized response with Voice!');
-    }
-
-    function replayLastResponse() {
-      if (state.lastBloggerReply) {
-        VoiceEngine.speak(state.lastBloggerReply, 'Blogger');
-      }
-    }
-
-    function toggleSpeechRecognition() {
-      const micBtn = document.getElementById('voice-mic-btn');
-      micBtn.classList.toggle('active');
-
-      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        try {
-          const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-          const recog = new SpeechRec();
-          recog.onresult = (e) => {
-            const transcript = e.results[0][0].transcript;
-            document.getElementById('console-input-field').value = transcript;
-            micBtn.classList.remove('active');
-            handleConsoleQuery({ preventDefault: () => {} });
-          };
-          recog.onerror = () => micBtn.classList.remove('active');
-          recog.onend = () => micBtn.classList.remove('active');
-          recog.start();
-          triggerToast('Listening... Speak now.');
-        } catch (e) {
-          micBtn.classList.remove('active');
-          askBloggerQuick('What is Issue #1042 in 3D Office?');
-        }
-      } else {
-        micBtn.classList.remove('active');
-        askBloggerQuick('What is Issue #1042 in 3D Office?');
-      }
-    }
-
-    // 7. Safety Firewall Rule Addition
-    function addStandingRule() {
-      const rule = prompt('Enter a new zero-trust standing instruction for Blogger and the squad:', 'Do not merge pull requests with failing unit tests.');
-      if (rule) {
-        const item = document.getElementById('user-custom-rule');
-        document.getElementById('custom-rule-text').innerHTML = `<strong>Rule 3 (Custom):</strong> ${rule}`;
-        item.style.display = 'flex';
-        triggerToast('Standing instruction registered with Safety Firewall!');
-        VoiceEngine.speak(`Firewall rule registered: ${rule}`, 'Blogger');
-      }
-    }
-
-    // 8. Resting Agents Accordion
+    // 5. Resting Agents Accordion
     function toggleResting() {
       state.restingVisible = !state.restingVisible;
       const restingCards = document.querySelectorAll('.resting-agent');
