@@ -354,6 +354,26 @@
       transform: translateY(-1px);
     }
 
+    /* VIEWS */
+    .view-container {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      animation: modalSlide 0.2s ease-out;
+    }
+
+    .view-container.hidden {
+      display: none !important;
+    }
+
+    .issues-view-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-card);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
     /* SECTION B: "ONE THING FOR TODAY" CARD */
     .one-thing-card {
       background: var(--surface);
@@ -435,46 +455,6 @@
     .summary-controls {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-    }
-
-    .calm-toggle-wrap {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text-muted);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .toggle-switch {
-      width: 36px;
-      height: 20px;
-      background: #CBD5E1;
-      border-radius: var(--radius-pill);
-      position: relative;
-      transition: background 0.2s;
-    }
-
-    .toggle-switch::after {
-      content: '';
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: #fff;
-      border-radius: 50%;
-      top: 3px;
-      left: 3px;
-      transition: transform 0.2s;
-    }
-
-    .calm-active .toggle-switch {
-      background: var(--primary);
-    }
-
-    .calm-active .toggle-switch::after {
-      transform: translateX(16px);
     }
 
     .summary-chips-row {
@@ -1065,17 +1045,7 @@
     }
 
     /* ==========================================================================
-       4. CALM MODE TOGGLED STATE
-       ========================================================================== */
-    .calm-mode-active .summary-chips-row,
-    .calm-mode-active .goal-progress-strip,
-    .calm-mode-active .journey-card,
-    .calm-mode-active .resting-section {
-      display: none !important;
-    }
-
-    /* ==========================================================================
-       5. MODALS & DRAWERS
+       4. MODALS & DRAWERS
        ========================================================================== */
     .modal-backdrop {
       display: none;
@@ -1252,9 +1222,11 @@
         </div>
 
         <nav class="nav-links">
-          <a href="#product" class="nav-link active">Product</a>
-          <a href="#marketing" class="nav-link">Marketing</a>
-          <a href="#security" class="nav-link">Security</a>
+          <button class="nav-link active" id="nav-link-dashboard" onclick="switchView('dashboard')">Dashboard</button>
+          <button class="nav-link" id="nav-link-issues" onclick="switchView('issues')">
+            <span>Issues</span>
+            <span class="nav-badge" id="nav-issues-badge">4</span>
+          </button>
         </nav>
       </div>
 
@@ -1273,7 +1245,8 @@
         <div class="notif-menu" id="notif-menu">
           <div class="notif-title">Notifications</div>
           <div class="notif-item"><strong>Gojo:</strong> Finished fix for #93. Waiting for your review.</div>
-          <div class="notif-item"><strong>Points:</strong> +40 points credited on #88 clean room fix.</div>
+          <div class="notif-item"><strong>Sukuna:</strong> Active on #1120 router WebSocket auth.</div>
+          <div class="notif-item"><strong>Six Eyes:</strong> Running test suite on #1042 3D Office.</div>
           <div class="notif-item" style="border: none;"><strong>Weekly goal:</strong> Goal reached (1,669 / 500 pts).</div>
         </div>
 
@@ -1292,6 +1265,7 @@
         <h1 class="greeting-title" id="dynamic-greeting">Good morning, Enaye.</h1>
         <p class="greeting-sub" id="dynamic-sub">You have 1 issue waiting, and you're past this week's goal.</p>
       </div>
+
       <div class="greeting-actions">
         <button class="btn-action-pill" onclick="openNewIssueModal()">
           <span>+</span>
@@ -1300,200 +1274,219 @@
       </div>
     </section>
 
-    <!-- SECTION B: "ONE THING FOR TODAY" CARD -->
-    <section class="one-thing-card" id="handshake-section">
-      <div class="one-thing-content" id="spotlight-body">
-        <div class="one-thing-info">
-          <span class="one-thing-label">Today's one thing</span>
-          <p class="one-thing-text" id="spotlight-text">
-            Gojo finished a fix for <strong>#93</strong> and would like your review.
-          </p>
+    <!-- VIEW 1: WELCOME DASHBOARD -->
+    <div id="view-dashboard" class="view-container">
+      <!-- SECTION B: "ONE THING FOR TODAY" CARD -->
+      <section class="one-thing-card" id="handshake-section">
+        <div class="one-thing-content" id="spotlight-body">
+          <div class="one-thing-info">
+            <span class="one-thing-label">Today's one thing</span>
+            <p class="one-thing-text" id="spotlight-text">
+              Gojo finished a fix for <strong>#93</strong> and would like your review.
+            </p>
+          </div>
+          <div class="one-thing-actions">
+            <button class="btn-primary" onclick="openReviewModal()">Review</button>
+          </div>
         </div>
-        <div class="one-thing-actions">
-          <button class="btn-primary" onclick="openReviewModal()">Review</button>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SECTION C: CALM SUMMARY ROW -->
-    <section class="summary-section">
-      <div class="summary-controls">
-        <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">Overview</span>
-        <div class="calm-toggle-wrap" id="calm-toggle" onclick="toggleCalmMode()">
-          <span>Calm mode</span>
-          <div class="toggle-switch"></div>
+      <!-- SECTION C: SUMMARY ROW -->
+      <section class="summary-section">
+        <div class="summary-controls">
+          <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">Overview</span>
         </div>
-      </div>
 
-      <div class="summary-chips-row">
-        <div class="summary-chip" onclick="filterIssues('all')" title="Click to view all issues">
-          <span class="chip-number" id="sum-points">1,669</span>
-          <span class="chip-label">Points earned</span>
+        <div class="summary-chips-row">
+          <div class="summary-chip" onclick="switchView('issues', 'all')" title="Click to view all issues">
+            <span class="chip-number" id="sum-points">1,669</span>
+            <span class="chip-label">Points earned</span>
+          </div>
+          <div class="summary-chip" onclick="switchView('issues', 'resolved')" title="Click to view resolved">
+            <span class="chip-number" id="sum-resolved">14</span>
+            <span class="chip-label">Resolved</span>
+          </div>
+          <div class="summary-chip" onclick="switchView('issues', 'assigned')" title="Click to view assigned issues">
+            <span class="chip-number" id="sum-assigned">2</span>
+            <span class="chip-label">Assigned to me</span>
+          </div>
+          <div class="summary-chip" onclick="scrollToSection('agents-section')" title="Click to view teammates">
+            <span class="chip-number">3</span>
+            <span class="chip-label">Teammates (All online)</span>
+          </div>
         </div>
-        <div class="summary-chip" onclick="filterIssues('resolved')" title="Click to view resolved">
-          <span class="chip-number" id="sum-resolved">14</span>
-          <span class="chip-label">Resolved</span>
-        </div>
-        <div class="summary-chip" onclick="filterIssues('assigned')" title="Click to view assigned issues">
-          <span class="chip-number" id="sum-assigned">2</span>
-          <span class="chip-label">Assigned to me</span>
-        </div>
-        <div class="summary-chip" onclick="scrollToSection('agents-section')" title="Click to view teammates">
-          <span class="chip-number">3</span>
-          <span class="chip-label">Teammates</span>
-        </div>
-      </div>
 
-      <div class="goal-progress-strip">
-        <div class="goal-track" title="Sprint 14 weekly goal progress">
-          <div class="goal-fill" id="goal-progress-bar" style="width: 100%;"></div>
+        <div class="goal-progress-strip">
+          <div class="goal-track" title="Sprint 14 weekly goal progress">
+            <div class="goal-fill" id="goal-progress-bar" style="width: 100%;"></div>
+          </div>
+          <span class="goal-text" id="goal-status-text">Goal reached · 1,669 / 500 pts</span>
         </div>
-        <span class="goal-text" id="goal-status-text">Goal reached · 1,669 / 500 pts</span>
-      </div>
-    </section>
+      </section>
 
-    <!-- SECTION D: AGENTS AS TEAMMATES -->
-    <section id="agents-section">
-      <div class="section-header">
-        <h2 class="section-title">Teammate Agents</h2>
-        <span style="font-size: 13px; color: var(--text-muted);">3 teammates (1 online, 2 resting)</span>
-      </div>
+      <!-- SECTION D: AGENTS AS TEAMMATES -->
+      <section id="agents-section">
+        <div class="section-header">
+          <h2 class="section-title">Teammate Agents</h2>
+          <span style="font-size: 13px; color: var(--text-muted);" id="teammates-count-status">3 teammates (all online)</span>
+        </div>
 
-      <div class="agents-grid">
-        <!-- 1. GOJO (Frontend & Antigravity) -->
-        <article class="agent-card">
+        <div class="agents-grid">
+          <!-- 1. GOJO (Frontend & Antigravity) -->
+          <article class="agent-card">
+            <div>
+              <div class="agent-card-top">
+                <div class="avatar-agent avatar-gojo" title="Gojo (Agent)">GJ</div>
+                <div class="presence-dot presence-online" id="gojo-presence" title="Online and active"></div>
+              </div>
+
+              <div class="agent-identity">
+                <div class="agent-name-row">
+                  <strong class="agent-name">Gojo</strong>
+                  <span class="agent-role-tag">Frontend & Antigravity</span>
+                  <span class="badge-needs-you" id="gojo-badge">Needs you</span>
+                </div>
+                <p class="agent-status-msg" id="gojo-status-msg">Working on #93, fix ready for review.</p>
+              </div>
+
+              <!-- Handoff box -->
+              <div class="agent-handoff-box" id="gojo-handoff">
+                <p>I fixed the stale channel bug in the group chat composer. Want to review it?</p>
+                <div class="handoff-actions">
+                  <button class="btn-approve" onclick="approveGojoHandoff()">Approve</button>
+                  <button class="btn-change" onclick="openChangeNotesModal('Gojo')">Change</button>
+                  <button class="btn-notnow" onclick="dismissGojoHandoff()">Not now</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="agent-footer">
+              <span style="font-size: 11px; color: var(--text-soft);">Assigned: #93 Composer bug</span>
+              <button class="btn-task" onclick="openTaskModal('Gojo')">Give a task</button>
+            </div>
+          </article>
+
+          <!-- 2. SUKUNA (Chaos Lead & Security) -->
+          <article class="agent-card">
+            <div>
+              <div class="agent-card-top">
+                <div class="avatar-agent avatar-sukuna" title="Sukuna (Agent)">SK</div>
+                <div class="presence-dot presence-online" id="sukuna-presence" title="Online and active"></div>
+              </div>
+              <div class="agent-identity">
+                <div class="agent-name-row">
+                  <strong class="agent-name">Sukuna</strong>
+                  <span class="agent-role-tag">Chaos Lead & Security</span>
+                </div>
+                <p class="agent-status-msg" id="sukuna-status-msg">Investigating #1120 WebSocket router token handshake.</p>
+              </div>
+
+              <!-- Active Task Pill -->
+              <div style="margin-top: 10px; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #92400E; display: flex; align-items: center; justify-content: space-between;">
+                <span>⚡ Task: <strong>#1120</strong> WebSocket Bearer auth</span>
+                <span style="font-size: 11px; background: #F59E0B; color: #fff; padding: 2px 7px; border-radius: 9999px; font-weight: 500;">Active</span>
+              </div>
+            </div>
+            <div class="agent-footer">
+              <span style="font-size: 11px; color: var(--text-soft);">Assigned: #1120 Centrifugo</span>
+              <button class="btn-task" onclick="openTaskModal('Sukuna')">Give a task</button>
+            </div>
+          </article>
+
+          <!-- 3. SIX EYES (Reviewer & QA) -->
+          <article class="agent-card">
+            <div>
+              <div class="agent-card-top">
+                <div class="avatar-agent avatar-sixeyes" title="Six Eyes (Agent)">SE</div>
+                <div class="presence-dot presence-online" id="sixeyes-presence" title="Online and active"></div>
+              </div>
+              <div class="agent-identity">
+                <div class="agent-name-row">
+                  <strong class="agent-name">Six Eyes</strong>
+                  <span class="agent-role-tag">Reviewer & QA</span>
+                </div>
+                <p class="agent-status-msg" id="sixeyes-status-msg">Running automated regression suite for #1042.</p>
+              </div>
+
+              <!-- Active Task Pill -->
+              <div style="margin-top: 10px; background: #EEF2FF; border: 1px solid #E0E7FF; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #3730A3; display: flex; align-items: center; justify-content: space-between;">
+                <span>🔍 Task: <strong>#1042</strong> 3D Office false 403 test</span>
+                <span style="font-size: 11px; background: #6366F1; color: #fff; padding: 2px 7px; border-radius: 9999px; font-weight: 500;">Testing</span>
+              </div>
+            </div>
+            <div class="agent-footer">
+              <span style="font-size: 11px; color: var(--text-soft);">Assigned: #1042 3D Office</span>
+              <button class="btn-task" onclick="openTaskModal('Six Eyes')">Give a task</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECTION E: POINTS JOURNEY -->
+      <section class="journey-card">
+        <div class="journey-header">
           <div>
-            <div class="agent-card-top">
-              <div class="avatar-agent avatar-gojo" title="Gojo (Agent)">GJ</div>
-              <div class="presence-dot presence-online" id="gojo-presence" title="Online and active"></div>
-            </div>
-
-            <div class="agent-identity">
-              <div class="agent-name-row">
-                <strong class="agent-name">Gojo</strong>
-                <span class="agent-role-tag">Frontend & 3D Office</span>
-                <span class="badge-needs-you" id="gojo-badge">Needs you</span>
-              </div>
-              <p class="agent-status-msg" id="gojo-status-msg">Working on #93, fix ready for review.</p>
-            </div>
-
-            <!-- Handoff box -->
-            <div class="agent-handoff-box" id="gojo-handoff">
-              <p>I fixed the stale channel bug in the group chat composer. Want to review it?</p>
-              <div class="handoff-actions">
-                <button class="btn-approve" onclick="approveGojoHandoff()">Approve</button>
-                <button class="btn-change" onclick="openChangeNotesModal('Gojo')">Change</button>
-                <button class="btn-notnow" onclick="dismissGojoHandoff()">Not now</button>
-              </div>
-            </div>
+            <h3 class="journey-highlight" id="journey-headline">You earned 1,169 points this week. Nice work.</h3>
+            <p class="streak-kind-line" id="journey-streak-line">3 good weeks in the last 8 · Pick it back up any time.</p>
           </div>
 
-          <div class="agent-footer">
-            <span style="font-size: 11px; color: var(--text-soft);">Feeling productive today</span>
-            <button class="btn-task" onclick="openTaskModal('Gojo')">Give a task</button>
-          </div>
-        </article>
-
-        <!-- 2. SUKUNA (Resting) -->
-        <article class="agent-card resting-agent" style="opacity: 0.88;">
-          <div>
-            <div class="agent-card-top">
-              <div class="avatar-agent avatar-sukuna">SK</div>
-              <div class="presence-dot" title="Resting"></div>
-            </div>
-            <div class="agent-identity">
-              <div class="agent-name-row">
-                <strong class="agent-name">Sukuna</strong>
-                <span class="agent-role-tag">Chaos Lead</span>
-              </div>
-              <p class="agent-status-msg" id="sukuna-status-msg">Resting. Back in about 4 days.</p>
-            </div>
-          </div>
-          <div class="agent-footer">
-            <span style="font-size: 11px; color: var(--text-soft);">Offline</span>
-            <button class="btn-task" onclick="openNoteModal('Sukuna')">Leave a note</button>
-          </div>
-        </article>
-
-        <!-- 3. SIX EYES (Resting) -->
-        <article class="agent-card resting-agent" style="opacity: 0.88;">
-          <div>
-            <div class="agent-card-top">
-              <div class="avatar-agent avatar-sixeyes">SE</div>
-              <div class="presence-dot" title="Resting"></div>
-            </div>
-            <div class="agent-identity">
-              <div class="agent-name-row">
-                <strong class="agent-name">Six Eyes</strong>
-                <span class="agent-role-tag">Reviewer & QA</span>
-              </div>
-              <p class="agent-status-msg" id="sixeyes-status-msg">Resting. Back in about 4 days.</p>
-            </div>
-          </div>
-          <div class="agent-footer">
-            <span style="font-size: 11px; color: var(--text-soft);">Offline</span>
-            <button class="btn-task" onclick="openNoteModal('Six Eyes')">Leave a note</button>
-          </div>
-        </article>
-      </div>
-
-      <!-- Resting group accordion toggle -->
-      <div class="resting-section">
-        <button class="resting-toggle-btn" onclick="toggleResting()">
-          <span id="resting-btn-text">Hide resting teammates (2)</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-      </div>
-    </section>
-
-    <!-- SECTION E: ISSUES FOR YOU -->
-    <section>
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Issues for you</h2>
-          <span style="font-size: 13px; color: var(--text-muted);" id="issues-count-lbl">Showing 4 issues</span>
-        </div>
-        <button onclick="toggleAllVsAssigned()" style="font-size: 13px; color: var(--primary); font-weight: 500;" id="view-toggle-btn">View only assigned</button>
-      </div>
-
-      <!-- Quick Filter Tabs -->
-      <div class="issues-filter-tabs">
-        <button class="filter-tab active" id="filter-all" onclick="filterIssues('all')">All</button>
-        <button class="filter-tab" id="filter-assigned" onclick="filterIssues('assigned')">Assigned to me</button>
-        <button class="filter-tab" id="filter-created" onclick="filterIssues('created')">Created by me</button>
-        <button class="filter-tab" id="filter-resolved" onclick="filterIssues('resolved')">Resolved</button>
-      </div>
-
-      <div class="issues-list" id="issues-container">
-        <!-- Rendered dynamically -->
-      </div>
-    </section>
-
-    <!-- SECTION F: POINTS JOURNEY -->
-    <section class="journey-card">
-      <div class="journey-header">
-        <div>
-          <h3 class="journey-highlight" id="journey-headline">You earned 1,169 points this week. Nice work.</h3>
-          <p class="streak-kind-line" id="journey-streak-line">3 good weeks in the last 8 · Pick it back up any time.</p>
+          <select id="time-filter-select" onchange="switchTimeRange(this.value)" style="background: #fff; border: 1px solid var(--border-soft); padding: 5px 12px; border-radius: var(--radius-pill); font-size: 12px; color: var(--text-muted); outline: none;">
+            <option value="weekly">Weekly</option>
+            <option value="daily">Daily</option>
+            <option value="monthly">Monthly</option>
+          </select>
         </div>
 
-        <select id="time-filter-select" onchange="switchTimeRange(this.value)" style="background: #fff; border: 1px solid var(--border-soft); padding: 5px 12px; border-radius: var(--radius-pill); font-size: 12px; color: var(--text-muted); outline: none;">
-          <option value="weekly">Weekly</option>
-          <option value="daily">Daily</option>
-          <option value="monthly">Monthly</option>
-        </select>
-      </div>
+        <div class="weeks-strip" id="weeks-strip">
+          <div class="goal-dashed-line" title="Weekly Goal Line"></div>
+        </div>
+      </section>
 
-      <div class="weeks-strip" id="weeks-strip">
-        <div class="goal-dashed-line" title="Weekly Goal Line"></div>
-      </div>
-    </section>
+      <!-- SECTION F: GENTLE FOOTER -->
+      <footer class="gentle-footer">
+        <p>Thank you for building together with your teammates.</p>
+        <p style="font-size: 12px; color: var(--text-soft);">3 good weeks in the last 8 · Steady and calm</p>
+      </footer>
+    </div><!-- END #view-dashboard -->
 
-    <!-- SECTION G: GENTLE FOOTER -->
-    <footer class="gentle-footer">
-      <p>Thank you for building together with your teammates.</p>
-      <p style="font-size: 12px; color: var(--text-soft);">3 good weeks in the last 8 · Steady and calm</p>
-    </footer>
+    <!-- VIEW 2: INSIDE ISSUES -->
+    <div id="view-issues" class="view-container hidden">
+      <section class="issues-view-card">
+        <div class="section-header">
+          <div>
+            <div style="margin-bottom: 6px;">
+              <button onclick="switchView('dashboard')" style="font-size: 13px; color: var(--primary); font-weight: 500; display: inline-flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; padding: 0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                <span>Back to Dashboard</span>
+              </button>
+            </div>
+            <h2 class="section-title" style="font-size: 22px;">Issues</h2>
+            <span style="font-size: 13px; color: var(--text-muted);" id="issues-count-lbl">Showing 4 issues</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button onclick="toggleAllVsAssigned()" class="btn-action-pill" id="view-toggle-btn">View only assigned</button>
+            <button onclick="openNewIssueModal()" class="btn-primary" style="padding: 7px 16px; font-size: 13px;">+ New issue</button>
+          </div>
+        </div>
+
+        <!-- Quick Filter Tabs -->
+        <div class="issues-filter-tabs" style="margin-top: 16px;">
+          <button class="filter-tab active" id="filter-all" onclick="filterIssues('all')">All (4)</button>
+          <button class="filter-tab" id="filter-assigned" onclick="filterIssues('assigned')">Assigned to me (2)</button>
+          <button class="filter-tab" id="filter-created" onclick="filterIssues('created')">Created by me (3)</button>
+          <button class="filter-tab" id="filter-resolved" onclick="filterIssues('resolved')">Resolved (1)</button>
+        </div>
+
+        <div class="issues-list" id="issues-container" style="margin-top: 14px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- GENTLE FOOTER IN ISSUES VIEW -->
+      <footer class="gentle-footer">
+        <p>Issues synced live with Zedu workspace</p>
+      </footer>
+    </div><!-- END #view-issues -->
 
   </main>
 
@@ -1724,7 +1717,6 @@
         resolvedCount: 14,
         assignedCount: 2,
       },
-      calmMode: false,
       currentFilter: 'all',
       onlyAssignedView: false,
       workspace: 'Zedu',
@@ -1739,7 +1731,7 @@
           state: 'Open',
           stage: 'Ready',
           date: '2 weeks ago',
-          assignedTo: 'Enaye',
+          assignedTo: 'Gojo',
           createdByMe: false,
           isResolved: false,
           agentWorking: 'Gojo',
@@ -1753,10 +1745,10 @@
           state: 'Open',
           stage: 'In Review',
           date: '3 days ago',
-          assignedTo: 'Enaye',
+          assignedTo: 'Six Eyes',
           createdByMe: true,
           isResolved: false,
-          agentWorking: null,
+          agentWorking: 'Six Eyes',
           hasThanked: false,
         },
         {
@@ -1767,10 +1759,10 @@
           state: 'Open',
           stage: 'Ready',
           date: 'Yesterday',
-          assignedTo: 'Gojo',
+          assignedTo: 'Sukuna',
           createdByMe: true,
           isResolved: false,
-          agentWorking: null,
+          agentWorking: 'Sukuna',
           hasThanked: false,
         },
         {
@@ -1836,9 +1828,72 @@
       }
     }
 
+    // View Switcher (Dashboard vs Dedicated Issues View)
+    function switchView(viewKey, filterKey) {
+      const isIssues = viewKey === 'issues';
+      const dash = document.getElementById('view-dashboard');
+      const issues = document.getElementById('view-issues');
+      if (dash && issues) {
+        dash.classList.toggle('hidden', isIssues);
+        issues.classList.toggle('hidden', !isIssues);
+      }
+
+      // Update top nav links
+      const navDash = document.getElementById('nav-link-dashboard');
+      const navIssues = document.getElementById('nav-link-issues');
+      if (navDash && navIssues) {
+        navDash.classList.toggle('active', !isIssues);
+        navIssues.classList.toggle('active', isIssues);
+      }
+
+      if (filterKey) {
+        filterIssues(filterKey);
+      } else {
+        renderIssues();
+      }
+
+      const targetHash = isIssues ? '#issues' : '#dashboard';
+      if (window.location.hash !== targetHash) {
+        try {
+          history.pushState(null, '', targetHash);
+        } catch (_) {
+          window.location.hash = targetHash;
+        }
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateBadgeCounts() {
+      const total = state.issues.length;
+      const assigned = state.issues.filter(i => i.assignedTo === 'Enaye').length;
+      const created = state.issues.filter(i => i.createdByMe).length;
+      const resolved = state.issues.filter(i => i.isResolved).length;
+
+      const navBadge = document.getElementById('nav-issues-badge');
+      if (navBadge) navBadge.textContent = total;
+
+      const sumAssigned = document.getElementById('sum-assigned');
+      if (sumAssigned) sumAssigned.textContent = assigned;
+      const sumResolved = document.getElementById('sum-resolved');
+      if (sumResolved) sumResolved.textContent = resolved;
+
+      const fAll = document.getElementById('filter-all');
+      if (fAll) fAll.textContent = `All (${total})`;
+      const fAssigned = document.getElementById('filter-assigned');
+      if (fAssigned) fAssigned.textContent = `Assigned to me (${assigned})`;
+      const fCreated = document.getElementById('filter-created');
+      if (fCreated) fCreated.textContent = `Created by me (${created})`;
+      const fResolved = document.getElementById('filter-resolved');
+      if (fResolved) fResolved.textContent = `Resolved (${resolved})`;
+    }
+
     // 2. Render Issues List
     function renderIssues() {
+      updateBadgeCounts();
+
       const container = document.getElementById('issues-container');
+      if (!container) return;
       container.innerHTML = '';
 
       let filtered = state.issues.filter(issue => {
@@ -1950,10 +2005,12 @@
     function quickAskAgent(id) {
       const issue = state.issues.find(i => i.id === id);
       if (issue) {
-        issue.agentWorking = 'Gojo';
-        triggerToast(`Gojo dispatched to inspect #${id}!`);
-        const gojoStatus = document.getElementById('gojo-status-msg');
-        if (gojoStatus) gojoStatus.textContent = `Analyzing #${id} (${issue.title.slice(0, 30)}...)`;
+        const agent = issue.agentWorking || (issue.id === 1120 ? 'Sukuna' : (issue.id === 1042 ? 'Six Eyes' : 'Gojo'));
+        issue.agentWorking = agent;
+        triggerToast(`${agent} dispatched to inspect #${id}!`);
+        const agentKey = agent.toLowerCase().replace(/\s+/g, '');
+        const statusElem = document.getElementById(`${agentKey}-status-msg`);
+        if (statusElem) statusElem.textContent = `Analyzing #${id} (${issue.title.slice(0, 30)}...)`;
         renderIssues();
       }
     }
@@ -2051,15 +2108,7 @@
       triggerToast(`You sent a warm note to ${recipient}! +1 point credited.`);
     }
 
-    // 10. Calm Mode Toggle
-    function toggleCalmMode() {
-      state.calmMode = !state.calmMode;
-      document.body.classList.toggle('calm-mode-active', state.calmMode);
-      document.getElementById('calm-toggle').classList.toggle('calm-active', state.calmMode);
-      triggerToast(state.calmMode ? 'Calm mode activated. Distractions hidden.' : 'Standard mode restored.');
-    }
-
-    // 11. Points Chart Rendering
+    // 10. Points Chart Rendering
     function renderPointsChart(rangeKey = 'weekly') {
       const strip = document.getElementById('weeks-strip');
       strip.innerHTML = '<div class="goal-dashed-line" title="Weekly Goal Line"></div>';
@@ -2162,6 +2211,7 @@
       e.target.reset();
 
       renderIssues();
+      switchView('issues');
       triggerToast(`Issue #${newId} created successfully!`);
     }
 
@@ -2173,17 +2223,23 @@
 
       closeModal('task-modal');
 
+      const agentKey = (state.targetedAgent || 'Gojo').toLowerCase().replace(/\s+/g, '');
+      const statusElem = document.getElementById(`${agentKey}-status-msg`);
+
+      let taskText = '';
       if (selected === '1120') {
-        document.getElementById('gojo-status-msg').textContent = 'Investigating #1120 router WebSocket auth issue.';
+        taskText = 'Investigating #1120 router WebSocket auth issue.';
         const iss = state.issues.find(i => i.id === 1120);
-        if (iss) iss.agentWorking = 'Gojo';
+        if (iss) { iss.agentWorking = state.targetedAgent; iss.assignedTo = state.targetedAgent; }
       } else if (selected === '1042') {
-        document.getElementById('gojo-status-msg').textContent = 'Testing #1042 3D Office draft prefetch layout.';
+        taskText = 'Testing #1042 3D Office false 403 reception check.';
         const iss = state.issues.find(i => i.id === 1042);
-        if (iss) iss.agentWorking = 'Gojo';
+        if (iss) { iss.agentWorking = state.targetedAgent; iss.assignedTo = state.targetedAgent; }
       } else {
-        document.getElementById('gojo-status-msg').textContent = note || 'Working on assigned tasks.';
+        taskText = note || `Working on ${selected === 'custom' ? 'assigned task' : selected}.`;
       }
+
+      if (statusElem) statusElem.textContent = taskText;
 
       renderIssues();
       triggerToast(`Dispatched task to ${state.targetedAgent}!`);
@@ -2279,10 +2335,22 @@
       }
     });
 
+    // Hash-based routing
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#issues') {
+        switchView('issues');
+      } else {
+        switchView('dashboard');
+      }
+    });
+
     // Initialize
     initGreeting();
     renderIssues();
     renderPointsChart('weekly');
+    if (window.location.hash === '#issues') {
+      switchView('issues');
+    }
   </script>
 </body>
 </html>
