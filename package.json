@@ -1,0 +1,12 @@
+{
+  "name": "ziki-new",
+  "version": "1.0.0",
+  "description": "Ziki-new: Human, warm, calm, and delightful human-agent workspace",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "author": "Enaye Majiri",
+  "license": "MIT"
+}
+
