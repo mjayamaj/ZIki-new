@@ -193,7 +193,7 @@
     }
 
     .nav-link {
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: var(--radius-pill);
       font-size: 13px;
       color: var(--text-muted);
@@ -201,11 +201,23 @@
       font-weight: 500;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      transition: all 0.15s ease;
     }
 
-    .nav-link.active, .nav-link:hover {
-      color: var(--primary);
+    .nav-link.active {
+      color: #fff;
+      background: var(--primary);
+      font-weight: 500;
+    }
+
+    .nav-link.active .nav-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    .nav-link:not(.active):hover {
+      color: var(--text-main);
       background: var(--surface);
     }
 
@@ -216,6 +228,56 @@
       padding: 1px 6px;
       border-radius: var(--radius-pill);
       font-weight: 600;
+    }
+
+    /* SUBNAV TABS BELOW GREETING */
+    .workspace-subnav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: -16px;
+      margin-bottom: -12px;
+    }
+
+    .subnav-pill {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .subnav-pill:hover {
+      background: var(--surface);
+      color: var(--text-main);
+    }
+
+    .subnav-pill.active {
+      background: #EFF6FF;
+      color: var(--primary);
+      font-weight: 600;
+      border-color: #DBEAFE;
+    }
+
+    .subnav-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: var(--radius-pill);
+      background: #E2E8F0;
+      color: var(--text-muted);
+    }
+
+    .subnav-pill.active .subnav-badge {
+      background: #BFDBFE;
+      color: var(--primary);
     }
 
     .points-chip {
@@ -455,6 +517,54 @@
     .summary-controls {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    .calm-toggle-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-switch {
+      width: 36px;
+      height: 20px;
+      background: #CBD5E1;
+      border-radius: var(--radius-pill);
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s;
+    }
+
+    .calm-active .toggle-switch {
+      background: var(--primary);
+    }
+
+    .calm-active .toggle-switch::after {
+      transform: translateX(16px);
+    }
+
+    .calm-mode-active .summary-chips-row,
+    .calm-mode-active .goal-progress-strip,
+    .calm-mode-active .journey-card,
+    .calm-mode-active #dashboard-issues-section,
+    .calm-mode-active .resting-section {
+      display: none !important;
     }
 
     .summary-chips-row {
@@ -1267,6 +1377,14 @@
       </div>
 
       <div class="greeting-actions">
+        <button class="btn-action-pill" id="greeting-issues-btn" onclick="switchView('issues')" title="View Issues">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>Issues <span id="greeting-issues-count">4</span></span>
+        </button>
         <button class="btn-action-pill" onclick="openNewIssueModal()">
           <span>+</span>
           <span>New issue</span>
@@ -1274,13 +1392,24 @@
       </div>
     </section>
 
+    <!-- WORKSPACE SUB-NAV TABS -->
+    <div class="workspace-subnav">
+      <button class="subnav-pill active" id="subnav-dashboard" onclick="switchView('dashboard')">
+        <span>Dashboard</span>
+      </button>
+      <button class="subnav-pill" id="subnav-issues" onclick="switchView('issues')">
+        <span>Issues</span>
+        <span class="subnav-badge" id="subnav-issues-badge">4</span>
+      </button>
+    </div>
+
     <!-- VIEW 1: WELCOME DASHBOARD -->
     <div id="view-dashboard" class="view-container">
       <!-- SECTION B: "ONE THING FOR TODAY" CARD -->
       <section class="one-thing-card" id="handshake-section">
         <div class="one-thing-content" id="spotlight-body">
           <div class="one-thing-info">
-            <span class="one-thing-label">Today's one thing</span>
+            <span class="one-thing-label">TODAY'S ONE THING</span>
             <p class="one-thing-text" id="spotlight-text">
               Gojo finished a fix for <strong>#93</strong> and would like your review.
             </p>
@@ -1295,6 +1424,10 @@
       <section class="summary-section">
         <div class="summary-controls">
           <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">Overview</span>
+          <div class="calm-toggle-wrap" id="calm-toggle" onclick="toggleCalmMode()">
+            <span>Calm mode</span>
+            <div class="toggle-switch"></div>
+          </div>
         </div>
 
         <div class="summary-chips-row">
@@ -1303,16 +1436,16 @@
             <span class="chip-label">Points earned</span>
           </div>
           <div class="summary-chip" onclick="switchView('issues', 'resolved')" title="Click to view resolved">
-            <span class="chip-number" id="sum-resolved">14</span>
+            <span class="chip-number" id="sum-resolved">1</span>
             <span class="chip-label">Resolved</span>
           </div>
           <div class="summary-chip" onclick="switchView('issues', 'assigned')" title="Click to view assigned issues">
-            <span class="chip-number" id="sum-assigned">2</span>
+            <span class="chip-number" id="sum-assigned">3</span>
             <span class="chip-label">Assigned to me</span>
           </div>
           <div class="summary-chip" onclick="scrollToSection('agents-section')" title="Click to view teammates">
             <span class="chip-number">3</span>
-            <span class="chip-label">Teammates (All online)</span>
+            <span class="chip-label">Teammates</span>
           </div>
         </div>
 
@@ -1422,7 +1555,36 @@
         </div>
       </section>
 
-      <!-- SECTION E: POINTS JOURNEY -->
+      <!-- SECTION E: ISSUES FOR YOU (ON DASHBOARD) -->
+      <section class="issues-view-card" id="dashboard-issues-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Issues for you</h2>
+            <span style="font-size: 13px; color: var(--text-muted);" id="dashboard-issues-count-lbl">Showing 4 issues</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button onclick="toggleAllVsAssigned()" class="btn-action-pill" id="dashboard-view-toggle-btn">View only assigned</button>
+            <button onclick="switchView('issues')" class="btn-action-pill" style="color: var(--primary); font-weight: 500;">
+              <span>Open full view</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Filter Tabs -->
+        <div class="issues-filter-tabs" style="margin-top: 16px;">
+          <button class="filter-tab active" id="dash-filter-all" onclick="filterIssues('all')">All (4)</button>
+          <button class="filter-tab" id="dash-filter-assigned" onclick="filterIssues('assigned')">Assigned to me (3)</button>
+          <button class="filter-tab" id="dash-filter-created" onclick="filterIssues('created')">Created by me (2)</button>
+          <button class="filter-tab" id="dash-filter-resolved" onclick="filterIssues('resolved')">Resolved (1)</button>
+        </div>
+
+        <div class="issues-list" id="dashboard-issues-container" style="margin-top: 14px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- SECTION F: POINTS JOURNEY -->
       <section class="journey-card">
         <div class="journey-header">
           <div>
@@ -1714,11 +1876,12 @@
         name: 'Enaye Majiri',
         points: 1669,
         goal: 500,
-        resolvedCount: 14,
-        assignedCount: 2,
+        resolvedCount: 1,
+        assignedCount: 3,
       },
       currentFilter: 'all',
       onlyAssignedView: false,
+      calmMode: false,
       workspace: 'Zedu',
       restingVisible: true,
       targetedAgent: 'Gojo',
@@ -1730,8 +1893,8 @@
           priority: 'Medium',
           state: 'Open',
           stage: 'Ready',
-          date: '2 weeks ago',
-          assignedTo: 'Gojo',
+          date: 'Oct 17',
+          assignedTo: 'Enaye',
           createdByMe: false,
           isResolved: false,
           agentWorking: 'Gojo',
@@ -1745,7 +1908,7 @@
           state: 'Open',
           stage: 'In Review',
           date: '3 days ago',
-          assignedTo: 'Six Eyes',
+          assignedTo: 'Enaye',
           createdByMe: true,
           isResolved: false,
           agentWorking: 'Six Eyes',
@@ -1759,7 +1922,7 @@
           state: 'Open',
           stage: 'Ready',
           date: 'Yesterday',
-          assignedTo: 'Sukuna',
+          assignedTo: 'Enaye',
           createdByMe: true,
           isResolved: false,
           agentWorking: 'Sukuna',
@@ -1846,6 +2009,14 @@
         navIssues.classList.toggle('active', isIssues);
       }
 
+      // Update sub-nav pills below greeting
+      const subDash = document.getElementById('subnav-dashboard');
+      const subIssues = document.getElementById('subnav-issues');
+      if (subDash && subIssues) {
+        subDash.classList.toggle('active', !isIssues);
+        subIssues.classList.toggle('active', isIssues);
+      }
+
       if (filterKey) {
         filterIssues(filterKey);
       } else {
@@ -1873,28 +2044,40 @@
       const navBadge = document.getElementById('nav-issues-badge');
       if (navBadge) navBadge.textContent = total;
 
+      const subnavBadge = document.getElementById('subnav-issues-badge');
+      if (subnavBadge) subnavBadge.textContent = total;
+
+      const greetingCount = document.getElementById('greeting-issues-count');
+      if (greetingCount) greetingCount.textContent = total;
+
       const sumAssigned = document.getElementById('sum-assigned');
       if (sumAssigned) sumAssigned.textContent = assigned;
       const sumResolved = document.getElementById('sum-resolved');
       if (sumResolved) sumResolved.textContent = resolved;
 
-      const fAll = document.getElementById('filter-all');
-      if (fAll) fAll.textContent = `All (${total})`;
-      const fAssigned = document.getElementById('filter-assigned');
-      if (fAssigned) fAssigned.textContent = `Assigned to me (${assigned})`;
-      const fCreated = document.getElementById('filter-created');
-      if (fCreated) fCreated.textContent = `Created by me (${created})`;
-      const fResolved = document.getElementById('filter-resolved');
-      if (fResolved) fResolved.textContent = `Resolved (${resolved})`;
+      // Update both filter tab bars (dedicated view + dashboard view)
+      ['', 'dash-'].forEach(prefix => {
+        const fAll = document.getElementById(`${prefix}filter-all`);
+        if (fAll) fAll.textContent = `All (${total})`;
+        const fAssigned = document.getElementById(`${prefix}filter-assigned`);
+        if (fAssigned) fAssigned.textContent = `Assigned to me (${assigned})`;
+        const fCreated = document.getElementById(`${prefix}filter-created`);
+        if (fCreated) fCreated.textContent = `Created by me (${created})`;
+        const fResolved = document.getElementById(`${prefix}filter-resolved`);
+        if (fResolved) fResolved.textContent = `Resolved (${resolved})`;
+      });
     }
 
-    // 2. Render Issues List
+    // 2. Render Issues List (in both dedicated view and dashboard view)
     function renderIssues() {
       updateBadgeCounts();
 
-      const container = document.getElementById('issues-container');
-      if (!container) return;
-      container.innerHTML = '';
+      const containers = [
+        document.getElementById('issues-container'),
+        document.getElementById('dashboard-issues-container')
+      ].filter(Boolean);
+
+      if (containers.length === 0) return;
 
       let filtered = state.issues.filter(issue => {
         if (state.onlyAssignedView) return issue.assignedTo === 'Enaye';
@@ -1904,56 +2087,67 @@
         return true;
       });
 
-      document.getElementById('issues-count-lbl').textContent = `Showing ${filtered.length} ${filtered.length === 1 ? 'issue' : 'issues'}`;
+      const countLabels = [
+        document.getElementById('issues-count-lbl'),
+        document.getElementById('dashboard-issues-count-lbl')
+      ].filter(Boolean);
 
-      if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:32px; background:var(--surface); border-radius:12px; color:var(--text-muted);">Nothing in this view. Enjoy the quiet. ☕</div>`;
-        return;
-      }
+      countLabels.forEach(lbl => {
+        lbl.textContent = `Showing ${filtered.length} ${filtered.length === 1 ? 'issue' : 'issues'}`;
+      });
 
-      filtered.forEach(issue => {
-        const row = document.createElement('div');
-        row.className = 'issue-row';
-        row.id = `issue-${issue.id}`;
+      containers.forEach(container => {
+        container.innerHTML = '';
 
-        const priorityClass =
-          issue.priority === 'Urgent' ? 'priority-dot-urgent' :
-          issue.priority === 'High' ? 'priority-dot-high' :
-          issue.priority === 'Medium' ? 'priority-dot-amber' : 'priority-dot-low';
+        if (filtered.length === 0) {
+          container.innerHTML = `<div style="text-align:center; padding:32px; background:var(--surface); border-radius:12px; color:var(--text-muted);">Nothing in this view. Enjoy the quiet. ☕</div>`;
+          return;
+        }
 
-        row.innerHTML = `
-          <div class="issue-left">
-            <button class="vote-pill" onclick="upvoteIssue(${issue.id})" title="Click to upvote">
-              <span>▲</span>
-              <span id="vote-val-${issue.id}">${issue.votes}</span>
-            </button>
-            <span class="${priorityClass}" title="Priority: ${issue.priority}"></span>
-            <span class="issue-title" onclick="openIssueDetails(${issue.id})" title="${issue.title}">
-              ${issue.title}
-            </span>
-            <span class="issue-num">#${issue.id}</span>
-          </div>
+        filtered.forEach(issue => {
+          const row = document.createElement('div');
+          row.className = 'issue-row';
+          row.id = `issue-${issue.id}-${container.id}`;
 
-          <div class="issue-right">
-            <span class="status-pill ${issue.isResolved ? 'resolved' : ''}">
-              ${issue.isResolved ? 'Resolved · Merged' : `${issue.state} · ${issue.stage}`}
-            </span>
-            <span class="issue-date">${issue.date}</span>
-            <button class="btn-say-thanks ${issue.hasThanked ? 'thanked' : ''}" 
-              onclick="sayThanks(this, '${issue.agentWorking || 'team'}', ${issue.id})" 
-              title="Say thanks to teammate">
-              <span>${issue.hasThanked ? '❤️' : '♡'}</span>
-              <span>${issue.hasThanked ? 'Thanked' : 'Say thanks'}</span>
-            </button>
-            ${!issue.isResolved ? `
-              <button class="btn-ask-agent" onclick="quickAskAgent(${issue.id})">
-                ${issue.agentWorking ? `${issue.agentWorking} helping` : 'Ask agent'}
+          const priorityClass =
+            issue.priority === 'Urgent' ? 'priority-dot-urgent' :
+            issue.priority === 'High' ? 'priority-dot-high' :
+            issue.priority === 'Medium' ? 'priority-dot-amber' : 'priority-dot-low';
+
+          row.innerHTML = `
+            <div class="issue-left">
+              <button class="vote-pill" onclick="upvoteIssue(${issue.id})" title="Click to upvote">
+                <span>▲</span>
+                <span id="vote-val-${issue.id}-${container.id}">${issue.votes}</span>
               </button>
-            ` : ''}
-          </div>
-        `;
+              <span class="${priorityClass}" title="Priority: ${issue.priority}"></span>
+              <span class="issue-title" onclick="openIssueDetails(${issue.id})" title="${issue.title}">
+                ${issue.title}
+              </span>
+              <span class="issue-num">#${issue.id}</span>
+            </div>
 
-        container.appendChild(row);
+            <div class="issue-right">
+              <span class="status-pill ${issue.isResolved ? 'resolved' : ''}">
+                ${issue.isResolved ? 'Resolved · Merged' : `${issue.state} · ${issue.stage}`}
+              </span>
+              <span class="issue-date">${issue.date}</span>
+              <button class="btn-say-thanks ${issue.hasThanked ? 'thanked' : ''}" 
+                onclick="sayThanks(this, '${issue.agentWorking || 'team'}', ${issue.id})" 
+                title="Say thanks to teammate">
+                <span>${issue.hasThanked ? '❤️' : '♡'}</span>
+                <span>${issue.hasThanked ? 'Thanked' : 'Say thanks'}</span>
+              </button>
+              ${!issue.isResolved ? `
+                <button class="btn-ask-agent" onclick="quickAskAgent(${issue.id})">
+                  ${issue.agentWorking ? `${issue.agentWorking} helping` : 'Ask agent'}
+                </button>
+              ` : ''}
+            </div>
+          `;
+
+          container.appendChild(row);
+        });
       });
     }
 
@@ -1962,22 +2156,31 @@
       state.currentFilter = filterKey;
       state.onlyAssignedView = false;
       document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-      const activeBtn = document.getElementById(`filter-${filterKey}`);
-      if (activeBtn) activeBtn.classList.add('active');
-      document.getElementById('view-toggle-btn').textContent = 'View only assigned';
+      ['', 'dash-'].forEach(prefix => {
+        const activeBtn = document.getElementById(`${prefix}filter-${filterKey}`);
+        if (activeBtn) activeBtn.classList.add('active');
+      });
+      const btn1 = document.getElementById('view-toggle-btn');
+      if (btn1) btn1.textContent = 'View only assigned';
+      const btn2 = document.getElementById('dashboard-view-toggle-btn');
+      if (btn2) btn2.textContent = 'View only assigned';
       renderIssues();
     }
 
     function toggleAllVsAssigned() {
       state.onlyAssignedView = !state.onlyAssignedView;
-      const btn = document.getElementById('view-toggle-btn');
-      btn.textContent = state.onlyAssignedView ? 'View all issues' : 'View only assigned';
+      const text = state.onlyAssignedView ? 'View all issues' : 'View only assigned';
+      const btn1 = document.getElementById('view-toggle-btn');
+      if (btn1) btn1.textContent = text;
+      const btn2 = document.getElementById('dashboard-view-toggle-btn');
+      if (btn2) btn2.textContent = text;
+
       document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-      if (state.onlyAssignedView) {
-        document.getElementById('filter-assigned').classList.add('active');
-      } else {
-        document.getElementById('filter-all').classList.add('active');
-      }
+      const targetKey = state.onlyAssignedView ? 'assigned' : 'all';
+      ['', 'dash-'].forEach(prefix => {
+        const activeBtn = document.getElementById(`${prefix}filter-${targetKey}`);
+        if (activeBtn) activeBtn.classList.add('active');
+      });
       renderIssues();
     }
 
@@ -1985,10 +2188,20 @@
       const issue = state.issues.find(i => i.id === id);
       if (issue) {
         issue.votes += 1;
-        const elem = document.getElementById(`vote-val-${id}`);
-        if (elem) elem.textContent = issue.votes;
+        document.querySelectorAll(`[id^="vote-val-${id}-"]`).forEach(el => {
+          el.textContent = issue.votes;
+        });
         triggerToast(`Upvoted #${id} (+1 vote)`);
       }
+    }
+
+    // Calm Mode Toggle
+    function toggleCalmMode() {
+      state.calmMode = !state.calmMode;
+      document.body.classList.toggle('calm-mode-active', state.calmMode);
+      const toggle = document.getElementById('calm-toggle');
+      if (toggle) toggle.classList.toggle('calm-active', state.calmMode);
+      triggerToast(state.calmMode ? 'Calm mode activated. Distractions hidden.' : 'Standard mode restored.');
     }
 
     function openIssueDetails(id) {
@@ -2350,6 +2563,8 @@
     renderPointsChart('weekly');
     if (window.location.hash === '#issues') {
       switchView('issues');
+    } else {
+      switchView('dashboard');
     }
   </script>
 </body>
